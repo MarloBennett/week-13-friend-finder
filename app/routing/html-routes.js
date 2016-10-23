@@ -6,7 +6,7 @@ module.exports = function(app) {
 
 	//html get requests, shows user the requested page
 	app.get("/survey", function (req, res) {
-		res.sendFile(path.join(__dirname + "/../public/survey"));
+		res.sendFile(path.join(__dirname + "/../public/survey.html"));
 	});
 
 	//default to home if no page selected
