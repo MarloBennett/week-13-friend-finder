@@ -6,7 +6,7 @@ module.exports = function(app) {
 
 	//get request, show JSON of avaiable friends 
 	app.get("/api/friends", function(req, res) {
-		res.JSON(friendsList);
+		res.json(friendsList);
 	});
 
 	//post request, when user submits data through form push it to the friends array
