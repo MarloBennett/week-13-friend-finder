@@ -218,32 +218,36 @@
         // The callback is the response of the server. 
 
         // Here we get the location of the root page.
-        // We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
+        // We use this instead of explicitly saying the URL is localhost:3000 because the url will change when we deploy.
         var currentURL = window.location.origin;
 
-        $.post(currentURL + "/api/friends", newFriend,
-        function(){
+        //post to friends
+        $.post(
+            currentURL + "/api/friends", 
+            newFriend,
+            function(){
+                console.log("new friend submitted");
 
-            console.log("new friend submitted");
+                // Clear the form when submitting
+                $("#user_name").val("");
+                $("#photo_link").val("");
+                $("#q1").val("");
+                $("#q2").val("");
+                $("#q3").val("");
+                $("#q4").val("");
+                $("#q5").val("");
+                $("#q6").val("");
+                $("#q7").val("");
+                $("#q8").val("");
+                $("#q9").val("");
+                $("#q10").val("");
 
-            // Clear the form when submitting
-            $("#user_name").val("");
-            $("#photo_link").val("");
-            $("#q1").val("");
-            $("#q2").val("");
-            $("#q3").val("");
-            $("#q4").val("");
-            $("#q5").val("");
-            $("#q6").val("");
-            $("#q7").val("");
-            $("#q8").val("");
-            $("#q9").val("");
-            $("#q10").val("");
+            }
+        );
 
-        });
+    return false;
 
-return false;
+    });
 
-});
 
 </script>

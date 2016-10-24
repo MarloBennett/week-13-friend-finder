@@ -13,5 +13,8 @@ module.exports = function(app) {
 	app.post("/api/friends", function(req, res) {
 
 		friendsList.push(req.body);
+
+		// Send back success result
+		res.status(200).end();
 	});
 };
