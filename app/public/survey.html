@@ -191,10 +191,12 @@
 
 <script type="text/javascript">
 
+var currentURL = window.location.origin;
+
     $(".submit").on("click", function(){
 
         // capture info from form
-        var newFriend = {
+        newFriend = {
             name: $("#user_name").val().trim(),
             image: $("#photo_link").val().trim(),
             scores: [
@@ -219,13 +221,13 @@
 
         // Here we get the location of the root page.
         // We use this instead of explicitly saying the URL is localhost:3000 because the url will change when we deploy.
-        var currentURL = window.location.origin;
+       // currentURL = window.location.origin;
 
         //post to friends
         $.post(
             currentURL + "/api/friends", 
             newFriend,
-            function(){
+            function(data){
                 console.log("new friend submitted");
 
                 // Clear the form when submitting
@@ -245,9 +247,35 @@
             }
         );
 
+    runFriendQuery();
+
     return false;
+
 
     });
 
+function runFriendQuery() {
+
+    //use friends api url to get its data
+    $.ajax({url: currentURL + "/api/friends", method: "GET"})
+        .done(function(friendsData) {
+
+            //log url for reference
+            console.log("------------------------------------");
+            console.log("URL: " + currentURL + "/api/friends");
+            console.log("------------------------------------");
+
+            //log info returned from get
+            console.log(friendsData);
+            console.log("------------------------------------");
+
+            for (var i = 0; i < friendsData.length; i++) {
+                console.log(friendsData[i].name);
+            }
+
+        });
+}    
+
+//runFriendQuery();
 
 </script>
