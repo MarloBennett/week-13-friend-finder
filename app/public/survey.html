@@ -193,6 +193,8 @@
 
 var currentURL = window.location.origin;
 
+var newFriend;
+
     $(".submit").on("click", function(){
 
         // capture info from form
@@ -256,6 +258,8 @@ var currentURL = window.location.origin;
 
 function runFriendQuery() {
 
+    var currentUserScore = [];
+
     //use friends api url to get its data
     $.ajax({url: currentURL + "/api/friends", method: "GET"})
         .done(function(friendsData) {
@@ -269,9 +273,32 @@ function runFriendQuery() {
             console.log(friendsData);
             console.log("------------------------------------");
 
-            for (var i = 0; i < friendsData.length; i++) {
-                console.log(friendsData[i].name);
+            //put new user's scores into an array
+            for (var j = 0; j < newFriend.scores.length; j++) {
+                currentUserScore.push(parseInt(newFriend.scores[j]));
             }
+            console.log(currentUserScore);
+
+            //loop through all user scores except new user
+            for (var i = 0; i < friendsData.length-1; i++) {
+                //console.log(friendsData[i].scores);
+               // console.log(newFriend.scores[0]);
+               var sum = [];
+               //loop through new user scores and compare each index location
+               for (var k = 0; k < currentUserScore.length; k++) {
+                    sum.push(Math.abs(currentUserScore[k] - friendsData[i].scores[k]));
+                    var finalSum = sum.reduce(add, 0);
+
+                    function add(a, b) {
+                        return a + b;
+                    }
+                    
+               }
+                console.log("sum " + sum);
+                console.log("final sum " + finalSum);
+
+            }
+
 
         });
 }    
