@@ -253,12 +253,13 @@ var newFriend;
 
     return false;
 
-
     });
 
 function runFriendQuery() {
 
     var currentUserScore = [];
+    var finalSum;
+    var comparison = [];
 
     //use friends api url to get its data
     $.ajax({url: currentURL + "/api/friends", method: "GET"})
@@ -287,18 +288,44 @@ function runFriendQuery() {
                //loop through new user scores and compare each index location
                for (var k = 0; k < currentUserScore.length; k++) {
                     sum.push(Math.abs(currentUserScore[k] - friendsData[i].scores[k]));
-                    var finalSum = sum.reduce(add, 0);
+
+                    compareThem();
+                  
+                    //function to add items in sum array and return final sum                  
+                    function compareThem() {
+                    finalSum = sum.reduce(add, 0);
 
                     function add(a, b) {
                         return a + b;
                     }
-                    
+
+                    return finalSum;
+
+                     };
+
+                //end of var k loop
                }
+                //push final sums to an array
+                comparison.push(finalSum);
+
+                    
                 console.log("sum " + sum);
                 console.log("final sum " + finalSum);
+                console.log("comparison " + comparison);
 
+            //end of var i loop
             }
 
+            //function to find which final sum was the smallest - will match with index number of that friends entry
+            function indexOfSmallest(a) {
+                return a.indexOf(Math.min.apply(Math, a));
+            };
+
+           var smallest = indexOfSmallest(comparison);
+
+           console.log("index of smallest " + smallest);
+
+           alert("Your friend match is " + friendsData[smallest].name);
 
         });
 }    
