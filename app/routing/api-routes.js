@@ -4,7 +4,7 @@ var friendsList = require("../data/friends.js");
 //exportable function
 module.exports = function(app) {
 
-	//get request, show JSON of avaiable friends 
+	//get request, show JSON of available friends 
 	app.get("/api/friends", function(req, res) {
 		res.json(friendsList);
 	});

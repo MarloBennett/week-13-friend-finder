@@ -1,3 +1,5 @@
+//hard code a few entries so user will have someone to compare to
+
 var friendsArray = [
 	{
 		name: "Luna",
@@ -49,4 +51,5 @@ var friendsArray = [
 	}
 ];
 
+//make info exportable
 module.exports = friendsArray;

@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-lg-12">
 
-                <!-- Reservation Page -->
+                <!-- Survey Page -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">Survey</h4>
@@ -43,17 +43,11 @@
                       <form role="form"> 
                         <h3>About You</h3>
 
-                           <!-- <div class="form-group">-->
-                              <!--  <label for="">Name</label>-->
                             <h4>Name</h4>
                                 <input type="text" class="form-control" id="user_name" required>
-                           <!-- </div>-->
 
-                           <!-- <div class="form-group">-->
-                              <!--  <label for="">Link to photo image</label>-->
-                            <h4>Link to Photo (Required)</h4>
+                            <h4>Link to Photo</h4>
                                 <input type="text" class="form-control" id="photo_link" required>
-                          <!--  </div>-->
 
                         <h3>Questions</h3>
 
@@ -180,7 +174,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p><a href="/api/friends">API Friends Link</a></p>
+            <p><a href="/api/friends">API Friends Link</a> | | <a href="https://github.com/MarloBennett/week-13-friend-finder/tree/master">Github Repo</a></p>
         </div>
     </footer>
 
@@ -190,6 +184,7 @@
 </body>
 </html>
 
+<!-- modal js file -->
 <script src="../../sweetalert/sweetalert.min.js"></script>
 
 <script type="text/javascript">
@@ -220,15 +215,7 @@ var newFriend;
 
         console.log(newFriend);
 
-        // This line is the magic. It's very similar to the standard ajax function we used.
-        // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
-        // The callback is the response of the server. 
-
-        // Here we get the location of the root page.
-        // We use this instead of explicitly saying the URL is localhost:3000 because the url will change when we deploy.
-       // currentURL = window.location.origin;
-
-        //post to friends
+        //post to friends api
         $.post(
             currentURL + "/api/friends", 
             newFriend,
@@ -251,7 +238,7 @@ var newFriend;
 
             }
         );
-
+    //run query to do friend comparison
     runFriendQuery();
 
     return false;
@@ -288,30 +275,30 @@ function runFriendQuery() {
                 //console.log(friendsData[i].scores);
                // console.log(newFriend.scores[0]);
                var sum = [];
-               //loop through new user scores and compare each index location
+               //loop through new user scores and compare each index location to existing friends, then push to sum array for each
                for (var k = 0; k < currentUserScore.length; k++) {
                     sum.push(Math.abs(currentUserScore[k] - friendsData[i].scores[k]));
 
-                    compareThem();
+                    //call function to get final difference score
+                    compareNums();
                   
-                    //function to add items in sum array and return final sum                  
-                    function compareThem() {
-                    finalSum = sum.reduce(add, 0);
+                    //function to add items in sum array and return final sum, i.e. final difference score                 
+                    function compareNums() {
+                        finalSum = sum.reduce(add, 0);
 
-                    function add(a, b) {
-                        return a + b;
-                    }
+                        function add(a, b) {
+                            return a + b;
+                        }
 
-                    return finalSum;
+                        return finalSum;
 
                      };
 
                 //end of var k loop
                }
-                //push final sums to an array
+                //push final sums to an array created earlier
                 comparison.push(finalSum);
 
-                    
                 console.log("sum " + sum);
                 console.log("final sum " + finalSum);
                 console.log("comparison " + comparison);
@@ -324,23 +311,20 @@ function runFriendQuery() {
                 return a.indexOf(Math.min.apply(Math, a));
             };
 
+            //capture index of smallest number in a variable
            var smallest = indexOfSmallest(comparison);
 
            console.log("index of smallest " + smallest);
 
-           //alert("Your friend match is " + friendsData[smallest].name);
-
+           //modal with friend match
            swal({
                 title: "Best Match: " + friendsData[smallest].name,
                 html: true,
-               
                 imageUrl: friendsData[smallest].image,
                 imageSize: "150x150",
                 allowOutsideClick: true,
             })
         });
 }    
-
-//runFriendQuery();
 
 </script>
